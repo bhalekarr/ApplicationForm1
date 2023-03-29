@@ -5,111 +5,91 @@
 }
 
 
-<hr />
 <div class="row">
-<div class="col-md-3"></div>
-<div class="col-md-6">
-    <div class="card">
-         <form asp-action="Create" id="frmCreate">
-        <div class="card-header align-items-center">
-            <h3 class="text-center">Application Form</h3>
-        </div>
-        <div class="card-body">
-       
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label" ></label>
-                <input asp-for="Name" class="form-control"/>
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Age" class="control-label"></label>
-                <input asp-for="Age" class="form-control" />
-                <span asp-validation-for="Age" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Gender" class="control-label"></label>
-                @*<input asp-for="Gender" class="form-control" />*@
-                <input type="radio" name="Gender" value="Male" id="Male"  asp-for="Gender"/>
-                <label for="Male">Male</label>
-                <input type="radio" name="Gender" value="Female" id="Female"  asp-for="Gender"/>
-                <label for="Female">Female</label>
-                <input type="radio" name="Gender" value="Other" id="Other"  asp-for="Gender"/>
-                <label for="Other">Other</label>
-                <span asp-validation-for="Gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" id="PhoneNumber" name="PhoneNumber"/>
-                <span id="errPhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Country" class="control-label"></label>
-                @*<input asp-for="Country" class="form-control" />*@
-                <select asp-for="Country" class="form-control" name="Country" id="Country">
-                    <option value="">Select</option>
-                    <option value="India" id="India">India</option>
-                    <option value="USA" id="USA">USA</option>
-                </select>
-                <span asp-validation-for="Country" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="State" class="control-label"></label>
-                @*<input asp-for="State" class="form-control" />*@
-                <select asp-for="Country" class="form-control" name="Country" id="Country">
-                    <option value="">Select</option>
-                </select>
-                <span asp-validation-for="State" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Photo" class="control-label"></label>
-                <input asp-for="Photo" class="form-control" type="file"/>
-                <span asp-validation-for="Photo" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="card-footer">
-            <input type="submit" value="Create" class="btn btn-success" />
-            <a asp-action="List" class="btn btn-primary">Back to List</a>
-        </div>
-        </form>
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="card mt-auto">
+            <form asp-action="Create" id="frmCreate">
+                <div class="card-header align-items-center">
+                    <h3 class="text-center">Application Form</h3>
+                </div>
+                <div class="card-body">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group mt-3">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                    <div class="form-group mt-3 col-5">
+                        <label asp-for="Age" class="control-label"></label>
+                        <input asp-for="Age" class="form-control" />
+                        <span asp-validation-for="Age" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-3 col-7">
+                        <label asp-for="Gender" class="control-label"></label>
+                         <br />
+                        <input type="radio" name="Gender" value="Male" id="Male" asp-for="Gender"/>
+                        <label for="Male" >Male</label> &nbsp;
+                        <input type="radio" name="Gender" value="Female" id="Female" asp-for="Gender"/>
+                        <label for="Female">Female</label>&nbsp;
+                        <input type="radio" name="Gender" value="Other" id="Other" asp-for="Gender"/>
+                        <label for="Other" >Other</label>
+                         
+                        <span asp-validation-for="Gender" class="text-danger"></span>
+                    </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label asp-for="PhoneNumber" class="control-label"></label>
+                        <input asp-for="PhoneNumber" class="form-control" id="PhoneNumber" name="PhoneNumber" />
+                        <span id="errPhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label asp-for="Country" class="control-label "></label>
+                        @*<select asp-for="CountryId" class="dropdown form-select" asp-items="@(new SelectList(@ViewBag.CountryList, "Id", "Name"))" onchange="changeCountry(this)"></select>*@
+                        <select id="CountryId" name="CountryId" class="dropdown form-select" asp-for="CountryId"></select>
+                        <span asp-validation-for="Country" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label asp-for="State" class="control-label"></label>
+                        @*<select asp-for="StateId" class="dropdown form-select" name="StateId" id="StateId" asp-items="@(new SelectList(string.Empty, "Id", "Name"))">
+                            </select>*@
+                            <select class="dropdown form-select" name="StateId" id="StateId" asp-for="StateId">
+                                </select>
+                        
+                       <span asp-validation-for="State" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label asp-for="Photo" class="control-label"></label>
+                        <input asp-for="Photo" id="photo" name="photo" class="form-control" type="file" accept=".jpg, .jpeg, .png"/>
+                        <span asp-validation-for="Photo" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="card-footer align-content-center">
+                    <input type="submit" value="Create" class="btn btn-success" />
+                    <a asp-action="List" class="btn btn-primary">Back to List</a>
+                </div>
+            </form>
 
         </div>
+    </div>
+    <div class="col-md-3"></div>
 </div>
-<div class="col-md-3"></div>
-</div>
 
 
- 
+
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-
-<script type="text/javascript">
-$(document).ready(function() { 
-    //  $("#frmCreate").validate ({ 
-    //      rules: {
-    //      Name:"required",
-    //          Email: {
-    //          Email:true},
-    //      },
-    //      messages:{
-    //      Name:"Name is required."
-    //      },
-    //      errorPlacement: function(error, element) { 
-    //          var name = $(element).attr("name");
-    //          error.appendTo($("#errorName" + Name));
-    //      }
-    //})
-
-    var ph = $("#PhoneNumber").val();
-    if (ph == null) { 
-        $("#errPhoneNumber").text("Please enter Phone Number");
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-});
-    </script>
+    }
+    <script src="/lib/jquery/dist/jquery.min.js" ></script>
+    <script src="/Scripts/Create.js" ></script>
+ 

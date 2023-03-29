@@ -12,9 +12,11 @@ namespace RahulApp.Data
         }
 
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<State> States { get; set; }
 
-        public DbSet<RahulApp.Models.AddEmpViewModel>? AddEmpViewModel { get; set; }
+        //public DbSet<RahulApp.Models.AddEmpViewModel>? AddEmpViewModel { get; set; }
 
-        public DbSet<RahulApp.Models.EditEmployeeViewModel>? EditEmployeeViewModel { get; set; }
+        //public DbSet<RahulApp.Models.EditEmployeeViewModel>? EditEmployeeViewModel { get; set; }
     }
 }

@@ -53,20 +53,24 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="Country" class="control-label"></label>
-                         <select asp-for="Country" class="form-control" name="Country" id="Country">
-                    <option value="">Select</option>
-                    <option value="India" id="India">India</option>
-                    <option value="USA" id="USA">USA</option>
-                </select>
+                         @*<select asp-for="Country" class="form-select">
+                </select>*@
+                <select id="CountryId" name="CountryId" class="dropdown form-select" asp-for="CountryId"></select>
                         <span asp-validation-for="Country" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="State" class="control-label"></label>
-                        <input asp-for="State" class="form-control" />
+                         
+ @*                       <select asp-for="State" class="form-select" name="State">
+                    
+                </select>
+ *@               <select class="dropdown form-select" name="StateId" id="StateId" asp-for="StateId">
+                                </select>
                         <span asp-validation-for="State" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Photo" class="control-label"></label>
+                        <img class="img-thumbnail" src="@Model.Photo" width="200" height="200"/>  
                         <input asp-for="Photo" class="form-control" type="file" />
                         <span asp-validation-for="Photo" class="text-danger"></span>
                     </div>
@@ -89,6 +93,5 @@
     }
     }
 
-    <script type="text/javascript">
-
-    </script>
+   <script src="/lib/jquery/dist/jquery.min.js" ></script>
+    <script src="/Scripts/Create.js" ></script>

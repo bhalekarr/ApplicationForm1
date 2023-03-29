@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using RahulApp.Data;
 using RahulApp.Models;
 using System.Diagnostics;
 
@@ -8,11 +10,13 @@ namespace RahulApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IEmployee _employee;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger, IEmployee employee)
+        public HomeController(ILogger<HomeController> logger, IEmployee employee, ApplicationDbContext context)
         {
             _logger = logger;
             _employee = employee;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -31,11 +35,63 @@ namespace RahulApp.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        #region notworking
+        //not working
+        //public JsonResult GetState(int CountryId)
+        //{
+        //    List<State> stateList = new List<State>();
+        //    stateList = (from state in _context.States
+        //              where state.CountryId == CountryId
+        //              orderby state.Name
+        //                 select state).ToList();
+        //    ViewBag.StateList = stateList;
+
+        //    stateList.Insert(0, new State { Id = 0, Name = "Select State" });
+
+        //    return Json(new SelectList(stateList, "Id", "Name"));
+        //}
+
+        //working
+        //[HttpGet]
+        //public IActionResult Create( )
+        //{
+        //    List<Country> countryList = new List<Country>();
+
+        //    countryList = (from country in _context.Countries
+        //                   orderby country.Name
+        //                  select country).ToList();
+        //    ViewBag.CountryList = countryList;
+
+        //    countryList.Insert(0, new Country { Id = 0, Name = "Select Country" });
+
+        //    return View();
+        //}
+
+
+        #endregion
+
+
+        #region country, state cascading
+        public JsonResult GetCountry()
+        {
+            var countries = _context.Countries.OrderBy(x=>x.Name).ToList();
+            return new JsonResult(countries);
+        }
+
+        public JsonResult GetState(int CountryId)
+        {
+            var states = _context.States.Where(x=>x.Country.Id == CountryId).OrderBy(y => y.Name).ToList();
+            return new JsonResult(states);
+        }
+        #endregion
+
         public IActionResult Create(AddEmpViewModel model)
         {
+            var country = _context.Countries.Find(model.CountryId);
+            var state = _context.States.Find(model.StateId);
             try
             {
-                if (ModelState.IsValid) 
+                if (ModelState.IsValid)
                 {
                     Employee employee = new Employee
                     {
@@ -44,9 +100,9 @@ namespace RahulApp.Controllers
                         Email = model.Email,
                         PhoneNumber = model.PhoneNumber,
                         Gender = model.Gender,
-                        Country = model.Country,
-                        State = model.State
-                        //Photo = model.Photo,
+                        Country = country.Name,
+                        State = state.Name,
+                        Photo = model.Photo,
                     };
                     _employee.Add(employee);
 
@@ -54,7 +110,7 @@ namespace RahulApp.Controllers
 
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -89,6 +145,8 @@ namespace RahulApp.Controllers
         [HttpPost]
         public IActionResult Edit(EditEmployeeViewModel model)
         {
+            var country = _context.Countries.Find(model.CountryId);
+            var state = _context.States.Find(model.StateId);
             if (ModelState.IsValid)
             {
                 Employee emp = _employee.GetEmployee(model.EmployeeId);
